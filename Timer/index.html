@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+      <div class="clock-face">
+        
+        <div class="hand second-hand"></div>
+        
+      </div>
+      <div class ="timerBar">
+          <form>
+            <label for="min">Min</label>
+            <input id="min" class="timer" placeholder="00" type="number">
+            <p>:</p>
+            <label for="sec">Sec</label>
+            <input id="sec" class="timer" placeholder="00" type="number">
+            <br/>
+            <label for="select">Alarm sound</label>
+            <select id="select">
+              <option>Woop</option>
+              
+              <option>1812</option>
+              
+              <option>Alarm</option>
+              
+            </select>
+            <audio loop id ="Woop" src="alarm/woop.mp3"></audio>
+            <audio loop id ="1812" src="alarm/1812.mp3"></audio>
+            <audio loop id ="Alarm" src="alarm/alarm.mp3"></audio>
+          </form>
+          <button id="sa" onclick="timerfunction()">START</button>
+          <button id="so" onclick="stoptimer()">STOP</button>
+        </div>
+    </div>
+
+
+  <style>
+    html {
+      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: black;
+      position: absolute;
+      top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.08s;
+      transition-timing-function: cubic-bezier(0.16, 3.6, 0.58, 1);
+    }
+    .timerBar{
+      margin-top:100px;
+      color: white;
+      font-size: 20px;
+      display: block;
+      
+    }
+    #sec,#min{
+      width: 50px;
+      padding: 5px;
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
+    #sa, #so{
+      width:80px;
+      padding: 5px 10px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    #so{
+      display:none;
+    }
+
+  </style>
+ 
+  <script>
+        const hand = document.querySelector('.second-hand');
+        
+        min = document.getElementById('min');
+        var audio;
+        sec = document.getElementById('sec');
+        function timerfunction(){
+
+          if(min.value == 0 && sec.value == 0){
+            alert ("PROBLEM");
+            return;
+          }
+          start = document.getElementById('sa');
+          start.style.display = start.style.display === 'none' ? '' : 'none';
+       
+          stop = document.getElementById('so');
+          stop.style.display = stop.style.display === 'initial' ? '' : 'initial'; 
+          
+          const time = ((min.value * 60) + (sec.value * 1));
+          var timeDeg = (90);
+          var x = time;
+
+          var intervalID = setInterval(function () {
+          timeDeg += 6;
+          hand.style.transform = `rotate(${timeDeg}deg)`;
+           
+          if (--x === 0) {
+           window.clearInterval(intervalID);
+
+           var sel = document.getElementById('select').value;
+           if(sel == "Woop");
+            audio = document.getElementById(sel.toString());
+           audio.play();
+           hand.style.transform = `rotate(${90}deg)`;
+
+   }
+}, 1000);
+
+        }
+  
+        function stoptimer(){
+          audio.pause()
+          start = document.getElementById('sa');
+          start.style.display = start.style.display === 'initial' ? '' : 'initial';
+       
+          stop = document.getElementById('so');
+          stop.style.display = stop.style.display === 'none' ? '' : 'none';
+        }
+  </script>
+</body>
+</html>
