@@ -1,0 +1,71 @@
+:root{
+    --blur: 0px;
+    --hue: 0deg;
+    --base: #000;
+    --grey: 0%;
+    --contrast: 100%;
+}
+h2{
+    text-align: center;
+    font-size: 30px;
+}
+body{
+    background-color: rgb(0, 111, 105);
+    color:white;
+    width:100%;
+    max-height:100%;
+}
+.hl{
+    color: var(--base);
+}
+.controls{
+    width:25%;
+    height: 100%;
+    float: left;
+}
+ul{
+    list-style: none;
+    width:100%;
+}
+ul > li{
+    margin: 50px 0;
+    font-weight: bold;
+}
+.imgsect{
+    margin-top:50px;
+    width:70%;
+    float:right;
+    height:480px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: #000 4px solid;
+    filter: blur(var(--blur)) grayscale(var(--grey)) 
+    hue-rotate(var(--hue)) contrast(var(--contrast));
+    
+    margin-right: 25px; 
+}
+button{
+    border: none;
+    color: #161616;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: rgb(106, 106, 106);
+    color:white;
+    font-weight: bold;
+}
+
+.sunset{
+    background-image: url('./images/sunset.jpg');
+}
+.winter{
+    background-image: url('./images/winter.jpg');
+}
+.forrest{
+    background-image: url('./images/forrest.jpeg');
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+</head>
+<body>
+    <h2><span class="hl">Welcome</span> to the Filter gallery</h2>
+    <section>
+        <div class="controls">
+            <ul>
+                <li><label>Blur: </label><br/><input name="blur" type="range" min="0" max="30" value="0" data-sizing="px"></li>
+                <li><label>Hue: </label><br/><input name="hue" type="range" min="0" max="360" value="0" data-sizing="deg"></li>
+                <li><label>Greyscale: </label><br/><input name="grey" type="range" min="0" max="100" value="0" data-sizing="%"></li>
+                <li><label>contrast: </label><br/><input name="contrast" type="range" min="0" max="500" step="25" value="100" data-sizing="%"></li>
+                <li><label>Border Color: </label><br/><input name="base" type="color" value="#000000"></li>
+            </ul>
+        </div>
+        <div id="picture" class="imgsect sunset">
+            
+        </div>
+        <div class="row">
+            <button onclick="sunset()">Sunset</button>
+            <button onclick="winter()">Winter</button>
+            <button onclick="forrest()">Forrest</button>
+        </div> 
+    </section>
+    <script>
+        const inputs = document.querySelectorAll('.controls input');
+        back = document.getElementById('picture');
+        function handleUpdate(){
+            const suffix = this.dataset.sizing || '';
+            console.log(this.value)
+            document.documentElement.style.setProperty(`--${this.name}`,this.value + suffix)
+
+        }
+
+        inputs.forEach(input => input.addEventListener('change',handleUpdate));
+        inputs.forEach(input => input.addEventListener("mouseover", handleUpdate));    
+        function remove(){
+            if(back.classList.contains("winter")) {
+                back.classList.remove("winter");
+            }
+            if(back.classList.contains("forrest")){
+                back.classList.remove("forrest");
+            }
+            if(back.classList.contains("sunset")){
+                back.classList.remove("sunset");
+            }
+        }
+        
+        function sunset(){
+            remove();
+            back.classList.add("sunset");
+        }
+        function winter(){
+            remove();
+            back.classList.add("winter");
+        }
+        function forrest(){
+            remove();
+            back.classList.add("forrest");
+        }
+
+    </script>
+</body>
+</html>
