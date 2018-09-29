@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Soft sounds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+</head>
+<body>
+    <section id ="back">
+        <header>
+            <h2>Soft sounds</h2>
+        </header>
+            <h1>Relax your mind</h1>
+
+            <div id="rain">
+                <img onclick="audioRain()" src="./img/rain.png">
+                <audio loop id="rainA" src="ambiance/rain.mp3"></audio> 
+            </div>
+
+            <div id="snow">
+                <img onclick="audioSnow()" src="./img/snowflake.png">
+                <audio loop id="snowA" src="ambiance/snow.mp3"></audio> 
+            </div>
+        <footer>
+                <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+        </footer>
+    </section>
+
+    <script>
+        function audioRain(){
+            var sounds = document.getElementsByTagName('audio');
+            for(i=0; i<sounds.length; i++){
+                sounds[i].pause();   
+            }
+            back = document.getElementById('back');
+            if(back.classList.contains("snowy")){
+                if(back.classList.contains('rainy')) back.classList.remove('rainy');
+                back.classList.remove('snowy');
+            }
+            back.classList.add("rainy");
+
+            audio = document.getElementById('rainA');
+            audio.play();
+            audio.currentTime = 0;
+        }
+        function audioSnow(){
+            var sounds = document.getElementsByTagName('audio');
+            for(i=0; i<sounds.length; i++){
+                sounds[i].pause();   
+            }
+
+            back = document.getElementById('back');
+            if(back.classList.contains("rainy")){
+                if(back.classList.contains('snowy')) back.classList.remove('snowy');
+                back.classList.remove('rainy');
+            }
+            back.classList.add("snowy"); 
+            audio = document.getElementById('snowA');
+            audio.play();
+            audio.currentTime = 0;
+    }
+    </script>
+</body>
+</html>
