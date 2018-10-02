@@ -1,0 +1,30 @@
+a{
+    margin: 5px;
+}
+.boxes{
+    display: flex;
+    flex-direction: row;
+}
+.box, #t1, #t2{
+    width: 50%;
+    margin: 0px;
+}
+#t1,#t2,.box >h3{
+    margin:0 auto;
+    text-align: center;
+}
+.textBox, .dataBox{
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+}
+textarea{
+    width:80%;
+    height: 500px;
+    resize: none;
+    overflow-y: scroll;
+    word-wrap: break-word;
+}
+#data{
+    width:50%;
+}

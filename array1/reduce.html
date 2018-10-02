@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+</head>
+<body>
+        <a href="./index.html">Sort</a>
+        <a href="./reduce.html">Reduce</a>
+    <input type="file" id="file">
+    <!--<select id="select">
+            <option>Lorem</option>
+            <option>Casablanca</option>
+            <option>The Juvenile and Mankind</option>
+        </select>-->
+        <div class="boxes">
+            <div class="textBox">
+                <h3>Chosen Text</h3>
+                <textarea id="area" draggable="false" readonly>
+
+                </textarea>
+            </div>
+            <div class="dataBox">
+                    <h3 id="td">Text Data</h3>
+                    <textarea id="data" draggable="false" readonly>Check console.log </textarea>
+            </div>
+        </div>
+        <script>
+            var arr;
+            var words;
+            var clean;
+            var cleanArray = {};
+            var cleanData;
+            function getData(evt){
+                var f = evt.target.files[0];
+                
+                if(f){
+
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    var content = e.target.result;
+                    alert("Got the file.\n" +"name: " +f.name+"\n"
+                            +"Starts with: " + content.substr(1,content.indexOf("\n"))
+                            
+                        );
+                        arr = content;
+                        words = arr.split(/[, . \n\n]/);
+
+                        clean = words.filter(String);
+
+                        document.getElementById('area').value = content;
+
+                        document.getElementById('td').innerHTML = "Text Data: Alpha";
+                        cleanData = clean.reduce(function(acc,val){
+                            if(!acc[val]){
+                                acc[val] = 0;
+                            }
+                            acc[val]++;
+                            return acc;
+                        },{})
+                        console.log(cleanData);
+                        clean.forEach(data =>{
+                   
+                });
+                console.log(data);
+                }
+                reader.readAsText(f);
+                }else{
+                    alert("Failed to read")
+                }
+
+            }
+
+             document.getElementById('file').addEventListener('change',getData,false)
+        </script>
+</body>
+</html>

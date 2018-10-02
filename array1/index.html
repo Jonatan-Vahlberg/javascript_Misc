@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body onload="tableFill()">
+        <h1>Array Sorting System</h1>
+        <a href="./index.html">Sort</a>
+        <a href="./reduce.html">Reduce</a>
+        <p>Please Select a Sort type and press button</p>
+        <select id="select">
+            <option>None</option>
+            <option>By Age Acending</option>
+            <option>By Age Decending</option>
+            <option>By First Name a-z</option>
+            <option>By First Name z-a</option>
+            <option>By Last Name a-z</option>
+            <option>By Last Name z-a</option>
+            <option>By Income High to Low</option>
+            <option>By Income Low to High</option>
+        </select>
+        <button onclick="tableSort()">SORT</button>
+        <div class="boxes">
+            <div id ="b1" class="box">
+                <h3>Unsorted Table</h3>
+                <table id="t1">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                        <th>Income</th>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>
+            <div id="b2" class="box">
+                <h3>Sorted Table</h3>
+                <table id ="t2">
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th>Income</th>
+                            <th></th>
+                        </tr>
+                    </table>
+            </div>
+        </div>
+</body>
+<script>
+   
+     const persons = [
+  {first: 'Paisley', last: 'Li',	 age: 78 , income: 3131  },
+  {first: 'Kyson', last: 'Mendez',	 age: 62 , income: 5748  },
+  {first: 'Evangeline', last: 'Castro',	 age: 15 , income: 8332  },
+  {first: 'Nataly', last: 'Washington',	 age: 81 , income: 3210  },
+  {first: 'Ronin', last: 'Peck',	 age: 56 , income: 9312  },
+  {first: 'Yamilet', last: 'Mills',	 age: 63 , income: 4392  },
+  {first: 'Janet', last: 'Rojas',	 age: 86 , income: 9239  },
+  {first: 'Makena', last: 'Henson',	 age: 52 , income: 2876  },
+  {first: 'Erin', last: 'Sampson',	 age: 74 , income: 4853  },
+  {first: 'Anya', last: 'Davidson',	 age: 27 , income: 1991  },
+  {first: 'Amiah', last: 'Shea',	 age: 42 , income: 3114  },
+  {first: 'Carina', last: 'Salas',	 age: 33 , income: 3182  },
+  {first: 'Mireya', last: 'Ward',	 age: 16 , income: 8348  },
+  {first: 'Charlotte', last: 'Torres',  age: 30 , income: 5155  },
+  {first: 'Luka', last: 'Ritter',	 age: 8 , income: 5210  },
+  {first: 'William', last: 'Farley',	 age: 58 , income: 2546  },
+  {first: 'Addison', last: 'Buchanan',	 age: 55 , income: 2526  },
+  {first: 'Blaine', last: 'Travis',	 age: 69 , income: 2033  },
+  {first: 'Jovani', last: 'Johns',	 age: 83 , income: 9632  },
+  {first: 'Aidan', last: 'Gomez',	 age: 19 , income: 6998  },
+  {first: 'Kallie', last: 'Miles',	 age: 71 , income: 3973  },
+  {first: 'Dominique', last: 'Nguyen',	 age: 31 , income: 5362  },
+  {first: 'Ellie', last: 'Sheppard',	 age: 76 , income: 1283  },
+  {first: 'Jaime', last: 'Webb',	 age: 57 , income: 6301  },
+  {first: 'Cristian', last: 'Douglas',	 age: 38 , income: 4660  },
+  {first: 'Lara', last: 'Mcpherson',	 age: 84 , income: 5432  },
+  {first: 'Andrew', last: 'Wu',	 age: 59 , income: 5398  },
+  {first: 'Ulises', last: 'Stein',	 age: 9 , income: 6339  },
+  {first: 'Ezekiel', last: 'Duarte',	 age: 13 , income: 9451  },
+  {first: 'Andrea', last: 'Delacruz',	 age: 75 , income: 5531  }
+  ];
+    
+  function tableFill(){
+    var table = document.getElementById('t1');
+    var r = 1;
+    persons.forEach(person => {
+        var row = table.insertRow(r);
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+
+        cell1.innerHTML = person.first;
+        cell2.innerHTML = person.last;
+        cell3.innerHTML = person.age;
+        cell4.innerHTML = person.income;
+        cell5.innerHTML = "$";
+    });
+  }
+  function tableSort(){
+     var sortType = document.getElementById('select').value
+     var sorted;
+     if(tableFilled == true){
+         alert("what");
+        var table2 = document.getElementById('t2').getElementsByTagName('tbody')[0];
+        var tablerows = table2.getElementsByTagName('tr');
+        var rowLength = tablerows.length;
+        for(i = rowLength-1;i > 0; i--){
+           table2.removeChild(tablerows[i]); 
+        }
+    }
+     if(sortType == "By Age Acending"){
+        sorted = persons.sort((a,b) => a.age > b.age? 1: -1); 
+
+     }
+     else if(sortType == "By Age Decending"){
+        sorted = persons.sort((a,b) => a.age > b.age? -1: 1); 
+
+    }
+    else if(sortType == "By First Name a-z"){
+        sorted = persons.sort((a,b) => {
+            return a.first > b.first ? -1 : 1;
+        });
+
+    }
+    else if(sortType == "By First Name z-a"){
+        sorted = persons.sort((a,b) => {
+            return a.first > b.first ? 1 : -1;
+        });
+    }else if(sortType == "By Last Name a-z"){
+        sorted = persons.sort((a,b) => {
+            return a.last > b.last ? -1 : 1;
+        });
+    }
+    else if(sortType == "By Last Name z-a"){
+        sorted = persons.sort((a,b) => {
+            return a.last > b.last ? 1 : -1;
+        });
+    }
+    else if(sortType == "By Income High to Low"){
+        sorted = persons.sort((a,b) => a.income > b.income? 1: -1); 
+    }
+    else if(sortType == "By Income Low to High"){
+        sorted = persons.sort((a,b) => a.income > b.income? -1: 1); 
+    }
+    else{
+        return;
+    }
+    var table = document.getElementById('t2');
+    var r = 1;
+    sorted.forEach(person => {
+        var row = table.insertRow(r);
+
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+
+        cell1.innerHTML = person.first;
+        cell2.innerHTML = person.last;
+        cell3.innerHTML = person.age;
+        cell4.innerHTML = person.income;
+        cell5.innerHTML = "$";
+        tableFilled = 1;
+
+    });
+    
+
+  }
+  var tableFilled = 0;
+</script>
+</html>

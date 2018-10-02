@@ -38,7 +38,7 @@ ul > li{
     height:480px;
     background-size: cover;
     background-repeat: no-repeat;
-    border: #000 4px solid;
+    border: var(--base) 4px solid;
     filter: blur(var(--blur)) grayscale(var(--grey)) 
     hue-rotate(var(--hue)) contrast(var(--contrast));
     
