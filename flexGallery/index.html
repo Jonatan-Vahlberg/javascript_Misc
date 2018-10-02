@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div class="panels">
+        <div class="panel panel1">
+            <p>Our</p>
+            <p>Failiure</p>
+            <p>hurts</p>
+        </div>
+        <div class="panel panel2">
+            <p>Living</p>
+            <p>Is</p>
+            <p>Pain</p>
+        </div>
+        <div class="panel panel3">
+            <p>No</p>
+            <p>Success</p>
+            <p>Here</p>
+        </div>
+        <div class="panel panel4">
+            <p>Stay</p>
+            <p>In</p>
+            <p>Line</p>
+        </div>
+        <div class="panel panel5">
+            <p>All</p>
+            <p>progress</p>
+            <p>Fades</p>
+        </div>
+    </div>
+    <div class="content">
+        <div class="about1">
+            <h3>Our Failiure Hurts</h3>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nihil dicta porro dolorem a dolore sapiente, corporis quo perspiciatis commodi! Voluptatum dolores illum esse maiores perferendis delectus voluptatem labore qui?</p>
+        </div>
+        <div class="about2">
+                <h3>Living is pain</h3>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nihil dicta porro dolorem a dolore sapiente, corporis quo perspiciatis commodi! Voluptatum dolores illum esse maiores perferendis delectus voluptatem labore qui?</p>
+        </div>
+        <div class="about3">
+                <h3>No Success Here</h3>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nihil dicta porro dolorem a dolore sapiente, corporis quo perspiciatis commodi! Voluptatum dolores illum esse maiores perferendis delectus voluptatem labore qui?</p>
+        </div>
+        <div class="about4">
+                <h3>Stay in Line</h3>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nihil dicta porro dolorem a dolore sapiente, corporis quo perspiciatis commodi! Voluptatum dolores illum esse maiores perferendis delectus voluptatem labore qui?</p>
+        </div>
+        <div class="about5">
+                <h3>All progress Fades</h3>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic nihil dicta porro dolorem a dolore sapiente, corporis quo perspiciatis commodi! Voluptatum dolores illum esse maiores perferendis delectus voluptatem labore qui?</p>
+        </div>
+    </div>
+    <script>
+        const panels = document.querySelectorAll('.panel');
+        function toggleOpen(){
+            this.classList.toggle('open');
+            var cls =  this.classList;
+            switch(true){
+                case cls.contains('panel1'):
+                    document.querySelector('.about1').classList.toggle('abToggle')
+                break;
+                case cls.contains('panel2'):
+                    document.querySelector('.about2').classList.toggle('abToggle')
+                break;
+                case cls.contains('panel3'):
+                    document.querySelector('.about3').classList.toggle('abToggle')
+
+                break;
+                case cls.contains('panel4'):
+                    document.querySelector('.about4').classList.toggle('abToggle')
+                break;
+                case cls.contains('panel5'):
+                    document.querySelector('.about5').classList.toggle('abToggle')
+                break;
+
+                default:
+                alert("error");
+            }
+        }
+        function toggleActive(e){
+            if(e.propertyName.includes('flex')){
+                this.classList.toggle('open-active')
+            }
+        }
+        panels.forEach(panel => panel.addEventListener('click',toggleOpen));
+        panels.forEach(panel => panel.addEventListener('transitionend',toggleActive));
+    </script>
+</body>
+</html>

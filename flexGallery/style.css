@@ -1,0 +1,108 @@
+:root{
+    --grey: 70%;
+    --dark: 80%;
+}
+html {
+  box-sizing: border-box;
+  background: #778899;
+  font-family: 'helvetica neue';
+  font-size: 20px;
+  font-weight: 200;
+}
+
+body {
+  margin: 0;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+  }
+  .panels{
+      display: flex;
+      min-height:85vh;
+      border-bottom: #000 10px solid;
+  }
+  .panel1{background: url(https://source.unsplash.com/JxfKZbPDTSc/1500x1500)}
+  .panel2{background: url(https://source.unsplash.com/yJnFdX5DabE/1500x1500)}
+  .panel3{background: url(https://source.unsplash.com/gdAuwo-qj5k/1500x1500)}
+  .panel4{background: url(https://source.unsplash.com/8SpjPrQDw_Q/1500x1500)}
+  .panel5{background: url(https://source.unsplash.com/uxOB1EbqVk4/1500x1500)}
+
+  .panel{
+    box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
+      flex:1;
+      color: white;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      transition:
+        font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        background 0.2s;
+        background-size: cover;
+        font-size: 20px;
+        overflow: hidden;
+  }
+  .panel >*{
+      margin:0;
+      width:100%;
+      transition: transform 0.5s;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .panel p{
+      text-transform: uppercase;
+      font-family: 'Amatic SC', cursive;
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+      font-size: 2em;
+  }
+  .panel p:nth-child(2){
+      font-size: 4em;
+  }
+  .panel > *:first-child{transform: translateY(-150%);}
+  .panel.open-active > *:first-child{transform: translateY(0%);}
+  .panel > *:last-child{transform: translateY(150%);}
+  .panel.open-active > *:last-child{transform: translateY(0%);}
+  
+  .panel.open {
+    flex:5;
+    font-size: 40px;
+  }
+  .panel1.open-active{
+      filter: grayscale(var(--grey));
+  }
+  .panel2.open-active{
+      filter: brightness(var(--dark))contrast(200%)
+  }
+  .panel3.open-active{
+    filter: hue-rotate(220deg)grayscale(40%);
+}
+  .panel4.open-active{
+    filter: sepia(60%) contrast(200%)
+}
+.panel5.open-active{
+    filter: saturate(40%) contrast(200%)
+}
+/*CONTENT*/
+.content{
+    width: 80%;
+    display: flex;
+    flex:1;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    
+}
+.about1,.about2,.about3,.about4,.about5{
+    display: none;
+    margin: 0 10px; 
+}
+.abToggle{
+    display:initial;
+    background: white;
+    border: #000 3px solid;
+}
+  
