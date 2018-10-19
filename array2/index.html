@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <style>
+    .hl {
+      background: #ffc600;
+    }
+    
+    
+    </style>
+    <input class="s" type="number" placeholder="Search for Id">
+    <input class="d" type="number" placeholder="Delete by Id">
+    <button onclick="deleteById()">Delete</button>
+    <ul class="findings">
+    </ul>
+    <script>
+            function findMatches(iId,array){
+                return array.filter(Id =>{
+
+                    const reg = new RegExp(+iId,'g');
+                    console.log (Id)
+                    console.log(Id.id);
+                    return Id.id.toString().match(reg)
+                });
+
+            }
+            function displayPersons(){
+               const matchArray = findMatches(this.value,baseArr)
+               const html = matchArray.map(Id =>{
+                const regex = new RegExp(this.value, 'g');
+                const ids = Id.id.toString().replace(regex,`<span class="hl">${this.value}</span>`);
+                return `
+                    <li>
+                        <span class ="name">${Id.name} ${ids}</span>
+                    </li>
+                `;
+               }).join('');
+               findings.innerHTML = html;
+            }
+        
+        const baseArr = [
+            {name: 'Reena',	id: 400824},
+            {name: 'Celia',	id: 657018},
+            {name: 'Ozell',	id: 150821},
+            {name: 'Caren',	id: 843546},
+            {name: 'Juliet',	id: 775213},
+            {name: 'Hortensia',	id: 809631},
+            {name: 'Laure',	id: 857236},
+            {name: 'Marilu',	id: 183846},
+            {name: 'Normand',	id: 525433},
+            {name: 'Wilfred',	id: 173290},
+            {name: 'Clare',	id: 633114},
+            {name: 'Deanne',	id: 143646},
+            {name: 'Doretha',	id: 763937},
+            {name: 'Milissa',	id: 809768},
+            {name: 'Danette',	id: 839559},
+            {name: 'Marisela',	id: 870248},
+            {name: 'Rolande',	id: 549612},
+            {name: 'Dalila',	id: 961929},
+            {name: 'Kina',	id: 689338},
+            {name: 'Janetta',	id: 659676},
+            {name: 'Kourtney',	id: 472725},
+            {name: 'Florentino',	id: 975844},
+            {name: 'Glynda',	id: 516787},
+            {name: 'Delphine',	id: 642164},
+            {name: 'Arie',	id: 929183},
+            {name: 'Tyron',	id: 154958},
+            {name: 'Pamelia',	id: 629841},
+            {name: 'Alline',	id: 599650},
+            {name: 'Marcella',	id: 632898},
+            {name: 'Marquita',	id: 316152},
+            {name: 'Zenobia',	id: 608959},
+            {name: 'Tarra',	id: 460434},
+            {name: 'Selina',	id: 786871},
+            {name: 'Carletta',	id: 480584},
+            {name: 'Shaun',	id: 848314},
+            {name: 'Clifford',	id: 641948},
+            {name: 'Myong',	id: 695267},
+            {name: 'Rupert',	id: 559107},
+            {name: 'Ellamae',	id: 481684},
+            {name: 'Britany',	id: 367872},
+            {name: 'Myles',	id: 338660},
+            {name: 'Maryann',	id: 797253},
+            {name: 'Sharron',	id: 297478},
+            {name: 'Imogene',	id: 447355},
+            {name: 'Myrta',	id: 807773},
+            {name: 'Lyle',	id: 608949},
+            {name: 'Mallie',	id: 323323},
+            {name: 'Nobuko',	id: 794617},
+            {name: 'Enid',	id: 409722},
+            {name: 'Darci',	id: 508902},
+            {name: 'Rocio',	id: 496863},
+            {name: 'Imelda',	id: 530231},
+            {name: 'Paul',	id: 121112},
+            {name: 'Claudette',	id: 366199},
+            {name: 'So',	id: 71735},
+            {name: 'Devora',	id: 830279},
+            {name: 'Dominque',	id: 723577},
+            {name: 'Junita',	id: 595373},
+            {name: 'Cammy',	id: 771946},
+            {name: 'Nery',	id: 700284},
+            {name: 'Zaida',	id: 492979},
+            {name: 'Sigrid',	id: 940418},
+            {name: 'Elenora',	id: 502415},
+            {name: 'Dell',	id: 952300},
+            {name: 'Marguerite',	id: 470887},
+            {name: 'Mee',	id: 303659},
+            {name: 'Dionna',	id: 741000},
+            {name: 'Kellee',	id: 763853},
+            {name: 'Trinh',	id: 184603},
+            {name: 'Sharon',	id: 179546},
+            {name: 'Ona',	id: 250265},
+            {name: 'Ula',	id: 768215},
+            {name: 'Marian',	id: 424731},
+            {name: 'Lillian',	id: 791632},
+            {name: 'Johana',	id: 726562},
+            {name: 'Tamar',	id: 652237},
+            {name: 'Ivan',	id: 785099},
+            {name: 'Lashaunda',	id: 342461},
+            {name: 'Kori',	id: 467396},
+            {name: 'Geoffrey',	id: 685959},
+            {name: 'Lekisha',	id: 107580},
+            {name: 'Christin',	id: 585494},
+            {name: 'Santina',	id: 800444},
+            {name: 'Wendolyn',	id: 409491},
+            {name: 'Carroll',	id: 576784},
+            {name: 'Merlin',	id: 184612},
+            {name: 'Kena',	id: 336266},
+            {name: 'Delphine',	id:56404},
+            {name: 'Norah',	id: 791819},
+            {name: 'Michael',	id: 347526},
+            {name: 'Imogene',	id: 485231},
+            {name: 'Delores',	id: 296952},
+            {name: 'Chana',	id: 996429},
+            {name: 'Malika',	id: 845662},
+            {name: 'Hassie',	id: 172165},
+            {name: 'Felton',	id: 279314},
+            {name: 'Eddy',	id: 768984},
+            {name: 'Casandra',	id: 746423},
+            {name: 'Candida',	id: 787474},
+            {name: 'Herbert',	id: 814764}]
+        const searchInput = document.querySelector('.s');
+        const findings = document.querySelector('.findings');
+
+        searchInput.addEventListener('change',displayPersons);
+        searchInput.addEventListener('keyup',displayPersons);
+        
+        function deleteById(){
+            const id =  this.value;
+            const arrIndex= baseArr.findIndex(index =>{
+
+                if(id == index.id){
+                    return true;
+                }
+            });
+
+            if(!(arrIndex == "")){
+                baseArr.splice(arrIndex,1);
+                console.log(baseArr);
+            }
+            else{
+                alert ("NO");
+            }
+        }
+    </script>
+</body> 
+</html>
