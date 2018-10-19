@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+    <style>
+        html, body{
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            height:100vh;
+            overflow-x: hidden;
+            
+
+        }
+        body{
+            padding: 0px 20px 20px 20px;
+            height: 100%;
+            display: grid;
+            grid-template-rows: 100px 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr; 
+        }
+        .head{
+            grid-row: 1/1;
+            grid-column: 1/2;
+        }
+        .boxes{
+            grid-column: 1/5;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 20px 20px;
+        }
+        .box{
+            height: 100%;
+            width:100%;
+        }
+        .b1{
+            border: black 5px solid;
+            background: url("https://source.unsplash.com/ypS9j3UzqLk/640x680");
+            background-size: cover;
+        }
+        .b2{
+            border: black 5px solid;
+            background: url(https://source.unsplash.com/d9ZMDszfPDE/640x680);
+            background-size: cover;
+        }
+        .b3{
+            border: black 5px solid;
+            background: url("https://source.unsplash.com/Hs3dphb2J38/640x680");
+            background-size: cover;
+        }
+        .b4{
+            border: black 5px solid;
+            background: url("https://source.unsplash.com/ok_jwH447dc/640x680");
+            background-size: cover;
+        }
+        .b5{
+            border: black 5px solid;
+            background: url("https://source.unsplash.com/PCNdauVPbjA/640x680");
+            background-size: cover;
+        }
+        .b6{
+            border: black 5px solid;
+            background: url("https://source.unsplash.com/glrBDgQMAsY/640x680");
+            background-size: cover;
+        }
+        .b6 p{
+            text-align: center;
+
+        }
+        .r{
+            border: red 5px solid; 
+        }
+        .g{
+            border: green 5px solid; 
+        }
+        .b{
+            border: blue 5px solid; 
+        }
+
+          .b6 p{
+      color: white;
+      font-size: 20px;
+  }
+
+    </style>
+
+        <h1 class="head">Welcome to Colorkey Gallery</h1>
+        <p>Please hold down either "R", "G"  or "B" and click on a picture </p>
+        <p><s>The <b>ocean</b> bear climbs the <b>verdant</b> mountain during a <b>crimson</b> dawn</s></p>
+        <div class="pass">
+
+            <input id="password" type="password" placeholder="Enter password">
+            <button class="passCheck">TRY IT</button>
+    </div>
+    <div class="boxes">
+        <div class="box b1"></div>
+        <div class="box b2"></div>
+        <div class="box b3"></div>
+        <div class="box b4"></div>
+        <div class="box b5"></div>
+        <div class="box b6"><p id="yu89Hk"></p></div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
