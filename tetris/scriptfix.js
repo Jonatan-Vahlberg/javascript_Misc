@@ -1,6 +1,7 @@
 const canvas = document.getElementById('tetris');
  const context = canvas.getContext('2d');
  
+ 
  context.scale(20, 20);
 
  function arenaSweep(){
@@ -248,3 +249,35 @@ const colors = [
  playerReset();
  updateScore();
  update();
+//diddiculty
+const difficulty = document.querySelectorAll('.dif');
+difficulty.forEach(d => d.addEventListener('click',checkDifficulty));
+function checkDifficulty(e){
+    if(this.classList.contains("easy")){
+        dropInterval = 1000;
+        audio1.playbackRate = 1;
+    }
+    else if (this.classList.contains('normal')){
+        dropInterval = 500;
+        audio1.playbackRate = 1;
+    }
+    else if (this.classList.contains('hard')){
+        dropInterval = 250;
+        audio1.playbackRate = 1.5;
+    }
+    else if (this.classList.contains('insane')){
+        dropInterval = 100;
+        audio1.playbackRate = 2;
+    }
+}
+//audio
+ var audio1 = new Audio('the.mp3');
+
+ document.getElementById('a').addEventListener('click',playAudio);
+ function playAudio(){
+     audio1.play();
+     audio1.loop = true;
+     audio1.currentTime = 3.5;
+ }
+
+ 
