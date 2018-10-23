@@ -68,12 +68,14 @@ function moveAll(){
             ball.xSpeed = -ball.xSpeed;
             ball.yDelta = ball.y -(pPad.y + (pPad.height/2));
             ball.ySpeed = ball.yDelta * 0.115;
+            audioP.play();
         }
         else{
             cPad.score++;
             ballReset();
             cPad.y = ball.y
             ball.ySpeed = 3;
+            audioGoal.play();
         }
     }
     //Ball touches computer Paddle
@@ -82,12 +84,14 @@ function moveAll(){
             ball.xSpeed = -ball.xSpeed;
             ball.yDelta = ball.y -(cPad.y + (cPad.height/2));
             ball.ySpeed = ball.yDelta * 0.115;
+            audioC.play();
         }
         else{
             pPad.score++;
             ballReset();
             cPad.y = ball.y
             ball.ySpeed = 3;
+            audioGoal.play();
         }
     }
 
@@ -194,4 +198,9 @@ function colorChange(){
     }
 }
 buttons.forEach(button => button.addEventListener('click',colorChange));
+
+var audioP = new Audio('./audio/pBeep.ogg');
+var audioC = new Audio('./audio/cBeep.ogg');
+var audioGoal = new Audio('./audio/goalBeep.ogg');
+
 
