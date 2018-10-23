@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+    <style>
+        html,body{
+            width:100%;
+            height:100%;
+            margin: 0;
+            padding: 0;
+            background: #1e1e46
+        }
+        h1{
+            color: white;
+            text-align: center;
+            
+        }
+        #game{
+            margin-top: 100px; 
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        .colors{
+            margin: 0 auto;
+            text-align: center;
+        }
+        button{
+            margin-top: 40px;
+            height: 50px;
+            font-size: 25px;
+            border: none;   
+        }
+        #white{
+            background: black;
+            color: white;
+        }
+        #pink{
+            background: black;
+            color: #33DCE8;
+            text-shadow: 1px 1px #FF20AA;
+        }
+        #green{
+            background: black;
+            color: #008f11;
+        }
+        </style>
+        <h1>PONG</h1>
+    <canvas id="game" width="800" height="600"></canvas>
+    <div class="colors">
+        <button class="color" id="white">Balck and White</button>
+        <button class="color" id="pink">Pink and black and Cyan</button>
+        <button class="color" id="green">Black and and Green</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

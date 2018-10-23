@@ -4,7 +4,12 @@ context = document.querySelector("canvas").getContext("2d");
 
 context.canvas.height = 400;
 context.canvas.width = 500;
-
+var arena = [
+    [0,1,0,1],
+    [],
+    [0,1,0,1,1,0,1],
+    [1,1,1,1,1,0,1,0,0,0,0,1,0,1],
+];
 function moveObject(height,jumping,width,x,x_vel,y,y_vel,color){
     this.height = height;
     this.jumping = jumping;
@@ -37,6 +42,27 @@ function draw(object){
     // context.beginPath();
     // context.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     // context.fill();
+}
+var matrixBlocks = [];
+function drawArena(arena){
+    var xp = 0; 
+    var yp = 0
+    arena.forEach((row)=>{
+        row.forEach((col)=>{
+            if(col !== 0){
+                var block = new stuckObject(32,32,xp*32,60+(32*yp),"#344352")
+                ++xp;
+                draw(block);
+                matrixBlocks.push(block); 
+            }
+            else{
+                ++xp;
+            }
+        })
+        yp++;
+        xp = 0;
+    });
+
 }
 var rectangle = new moveObject(32,true,20,144,0,0,0,"#ff0000");
 var line = new stuckObject(32,40,250,80,"#202830");
@@ -124,11 +150,12 @@ loop = function() {
 //     }
 // }
   colides(rectangle,line);
+  matrixBlocks.forEach(val => colides(rectangle,val));
 
   rectangle.y_vel += 1.5;// gravity
   rectangle.x += rectangle.x_vel;
   rectangle.y += rectangle.y_vel;
-  rectangle.x_vel *= 0.9;// friction
+  rectangle.x_vel *= 0.85;// friction
   rectangle.y_vel *= 0.9;// friction
 
   // if rectangle is falling below floor line
@@ -169,6 +196,7 @@ loop = function() {
   context.rect(20,20,12,12);
   context.fill();
   draw(line);
+  drawArena(arena);
 
  
   // call update when the browser is ready to draw again
@@ -179,8 +207,8 @@ loop = function() {
 function collision(a,b){
     return a.x < b.x + b.width &&
            a.x + a.width > b.x &&
-           a.y < b.y + b.width &&
-           a.y + b.width > b.y;
+           a.y < b.y + b.height &&
+           a.y + a.width > b.y;
 
 }
 function colides(player, area){
@@ -189,7 +217,7 @@ function colides(player, area){
     //top
     if(player.y < area.y +2  - player.height){
         player.jumping = false;
-        player.y = area.y - player.height - 0,5;
+        player.y = area.y - player.height - 1,5;
         player.y_vel = 0;
         
     }else if(player.y > area.y + area.height){
@@ -197,9 +225,9 @@ function colides(player, area){
     //sides
     }else if(player.x + player.width >= area.x ){
         if(player.x > area.x + 3){
-            player.color = "#ffffff"
+            
             player.x_vel = 0;
-            player.x = area.x + area.width;
+            player.x = area.x + area.width+ 0.2;
         }else{
             player.x_vel = 0;
             player.x = area.x -player.width;
