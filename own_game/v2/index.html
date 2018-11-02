@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        main{
+            position: relative;
+        }
+        main > canvas{
+            position: absolute;
+        }
+        #bg{
+            z-index: 0;
+        }
+        #fg{
+            z-index: 1;
+        }
+        .img{
+            display: none;
+        }
+        </style>
+    <main>
+        <img class="img" src="./media/tileSheet.png" alt="">
+        <canvas id='bg' width="1000" height="500" ></canvas>
+        <canvas id="fg" width="1000" height="500" ></canvas>
+    </main>
+    <script src="./script.js"></script>
+</body>
+</html>
