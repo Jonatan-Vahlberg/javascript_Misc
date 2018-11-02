@@ -1,0 +1,34 @@
+html{
+    width: 100%;
+    height: 100;
+}
+body{
+    margin: 0;
+    background: url('./media/cork.jpg') no-repeat;  
+}
+.notes{
+    position: relative;
+}
+.note{
+    width: 400px;
+    position: absolute;
+    display: grid;
+    grid-template-rows: 40px 60px auto 40px;
+    border: black 2px solid;
+    background-color: #ffdd00;
+    box-shadow: 4px 4px 10px #000000;
+}
+.note > h2,.note > ul{
+    width:100%
+}
+.note > img{
+    height: 40px;
+    margin: 0 auto;
+    cursor: move;
+}
+.note > h2{
+    text-align: center;
+}
+.note > form{
+    margin: 0 auto;
+}

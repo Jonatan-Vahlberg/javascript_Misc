@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+
+</head>
+<body>
+    <div class="note-list">
+
+    </div>
+    <div class="notes">
+        <div class="note">
+            <img id="noteDrag" draggable="false" src="./media/RedPin.png">
+            <h2 data-index: 1>Test Post it</h2>
+            <ul class="items">
+                <li>Write in a note below</li>
+            </ul>
+            <form class="form">
+                <input type="text" name="item" placeholder="new note..." required>
+                <input type="submit" value="+New note">
+            </form>
+        </div>
+
+    </div>
+
+    <script src="move.js"></script>
+    <script src="list.js"></script>
+</body>
+</html>
