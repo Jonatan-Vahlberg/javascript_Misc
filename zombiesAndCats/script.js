@@ -1,7 +1,9 @@
 const canvas = document.querySelector('#canvas');
 const buttons = document.querySelectorAll('.input');
+const zDots = document.querySelectorAll('.zDot');
+const cDots = document.querySelectorAll('.cDot');
 const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
+canvas.width = 425;
 // var map = new Array(7).fill(new Array(7).fill());
 
 //This is the game map
@@ -172,7 +174,7 @@ function  populateMap(){
                     xP = generateRandomNr(0,canvas.width-100);
 
                     //There are four house variants and this choses one of them and helps pic them out of thi png file
-                    sX = generateRandomNr(0,3);  
+                    sX = generateRandomNr(0,4);  
                     var item2 = new itemObj('media/sprites/house.png',sX*100,0,100,128,xP,78,100,128);
                     //Lampost
                     xP = generateRandomNr(0,canvas.width-60);
@@ -187,13 +189,13 @@ function  populateMap(){
                     //Fish
                     xP = generateRandomNr(0,365);
                     yP = generateRandomNr(135,368)
-                    sX = generateRandomNr(0,3)
+                    sX = generateRandomNr(0,4)
                     var item1 = new itemObj('media/sprites/fish.png',sX*45,0,45,32,xP,yP,45,32);
 
                     //Second Fish
                     xP = generateRandomNr(0,365);
                     yP = generateRandomNr(135,368)
-                    sX = generateRandomNr(0,3)
+                    sX = generateRandomNr(0,4)
                     var item2 = new itemObj('media/sprites/fish.png',sX*45,0,45,32,xP,yP,45,32);
 
                     //boat
@@ -215,7 +217,7 @@ function  populateMap(){
                     //mushroom
                     xP = generateRandomNr(0,380);
                     yP = generateRandomNr(170,355);
-                    sX = generateRandomNr(0,3);  
+                    sX = generateRandomNr(0,4);  
                     var item2 = new itemObj('media/sprites/mushroom.png',sX*45,0,45,45,xP,yP,45,45);
                     //Stone
                     xP = generateRandomNr(0,canvas.width-75);
@@ -235,12 +237,12 @@ function  populateMap(){
                     //Woodpile
                     xP = generateRandomNr(0,325);
                     yP = generateRandomNr(236,300);
-                    sX = generateRandomNr(0,3);  
+                    sX = generateRandomNr(0,4);  
                     var item2 = new itemObj('media/sprites/wood.png',sX*100,0,100,100,xP,yP,100,100);
                     //sand
                     xP = generateRandomNr(0,380);
                     yP = generateRandomNr(236,300);
-                    sX = generateRandomNr(0,3);  
+                    sX = generateRandomNr(0,4);  
                     var item3 = new itemObj('media/sprites/sand.png',sX*45,0,45,45,xP,yP,45,45);
 
                     //Creating the cell
@@ -261,7 +263,7 @@ function  populateMap(){
                     //Tree
                     xP = generateRandomNr(0,380);
                     yP = generateRandomNr(236,300);
-                    sX = generateRandomNr(0,3);  
+                    sX = generateRandomNr(0,4);  
                     var item3 = new itemObj('media/sprites/tree.png',sX*150,0,150,150,xP,210,150,150);
 
                     //Creating the cell
@@ -271,7 +273,7 @@ function  populateMap(){
                     //signpost
                     xP = generateRandomNr(325,335);
                     yP = generateRandomNr(0,10);
-                    sX = generateRandomNr(0,3); 
+                    sX = generateRandomNr(0,4); 
                     var item1 = new itemObj('media/sprites/signpost.png',sX*100,0,100,150,xP,yP,100,150);
                     //sign
                     xP = generateRandomNr(0,325);
@@ -306,7 +308,7 @@ function  populateMap(){
                 case 8: //Tavern start
 
                    //The poster has three places to stay and diffrent values depending
-                   sX = generateRandomNr(0,2);
+                   sX = generateRandomNr(0,3);
                     if(sX == 0){
                         var item1 = new itemObj('media/sprites/poster.png',0,0,90,115,35,245,90,115);
                     }else if(sX == 1){
@@ -320,7 +322,7 @@ function  populateMap(){
                     var item2 = new itemObj('media/sprites/bar_stool.png',0,0,80,180,xP,220,80,180);
                     //liquer
                     xP = generateRandomNr(0,380);
-                    sX = generateRandomNr(0,1);  
+                    sX = generateRandomNr(0,2);  
                     var item3 = new itemObj('media/sprites/liquer.png',sX*45,0,45,45,xP,165,45,45);
                     
                     //Creating the cell
@@ -461,11 +463,11 @@ function drawAll(){
     ctx.drawImage(mapObject[player.y][player.x].image3,temp3.sX,temp3.sY,temp3.sWidth,temp3.sHeight,temp3.x,temp3.y,temp3.width,temp3.height);
 
 }
-function change(){
 
-
-}
 function move(){
+    // document.querySelector('.canvasArea').classList.add('fadeOut');
+
+    //checks wich button was pressed using each buttons unique IDs: UP DOWN LEFT RIGHT MISC
     if(this.id == 'UP'){
         player.y--;
         drawAll();
@@ -479,20 +481,22 @@ function move(){
     }else if(this.id == 'DOWN'){
         player.y++;
         drawAll();
-    }else if(this.id == 'MISC'){
+    }else if(this.id == 'MISC'){ // ´Start of the game
         drawAll();
         this.style.display = 'none';
         document.getElementById('LEFT').style.display = 'initial';
         document.getElementById('RIGHT').style.display = 'initial';
         document.getElementById('UP').style.display = 'initial';
         document.getElementById('DOWN').style.display = 'initial';
+        return;
     }
-    zombies.forEach(zombie =>{
-        //if zombie is both on a higher column and a higher row
-        let moveorNot = generateRandomNr(0,5);
-        console.log(moveorNot);
-        if(moveorNot < 4){
 
+    //After player moves all zombies move and this forEach loops decides theyre pathfinding 
+    zombies.forEach(zombie =>{
+        let moveorNot = generateRandomNr(0,5); //moves if number is not greater than set number in if statement bellow
+            if(moveorNot < 3){
+            
+            //if zombie is both on a higher column and a higher row
             if(zombie.x > player.x && zombie.y > player.y){
                 let decide = generateRandomNr(0,1);
                 if(decide == 0){
@@ -501,18 +505,50 @@ function move(){
                 else{
                     
                     zombie.y--;
+                    
                 }
-                
             }
-            //if zombie is on a lower column and higher row        
-            else if(zombie.x < player.x && zombie.y > player.y){
+            //if the zombie is on both a lower row and column
+            else if(zombie.x < player.x && zombie.y < player.y){
                 let decide = generateRandomNr(0,1);
                 if(decide == 0){
                     zombie.x++;
                 }
                 else{
-                    zombie.y--;
+                    zombie.y++;
                 }
+            }
+             //If on the same row or collumn
+             else if(zombie.x == player.x || zombie.y == player.y){
+                //if the row is either higher or lower
+                if(zombie.x == player.x){
+                    if(zombie.y > player.y){
+                        zombie.y--;    
+                    }   
+                    else{
+                        zombie.y++;
+                    }
+                }else{
+                    if(zombie.x > player.x){
+                        zombie.x--;    
+                    }else{
+                        zombie.x++
+                    }
+                }
+            }
+                    
+            //if zombie is on a lower column and higher row        
+            else if(zombie.x < player.x && zombie.y > player.y){
+                let decide = generateRandomNr(0,1);
+                if(decide == 0){
+                    zombie.x++;
+
+                }
+                else{
+                    zombie.y--;
+
+                }
+                
                 
             }
             //if zombie is on a higher column and a lower row
@@ -520,14 +556,17 @@ function move(){
                 let decide = generateRandomNr(0,1);
                 if(decide == 0){
                     zombie.x--;
+
                 }
                 else{
                     zombie.y++;
+
                 }
+
             }
-            //if
-            //if zombie is either on a higher collumn or a higher row 
+            //if zombie is either on a higher collumn or a higher row This one goes mostly unused as it is coverd by others
             else if((zombie.x > player.x && !(zombie.y > player.y))||(!(zombie.x > player.x) && zombie.y > player.y) ){
+
                 if(zombie.x > player.x){
                     zombie.x--;
                 }else if(zombie.y > player.y){
@@ -538,8 +577,9 @@ function move(){
             //If on the same row or collumn
             else if(zombie.x == player.x || zombie.y == player.y){
                 //if the row is either higher or lower
+                console.log('test 6');
                 if(zombie.x == player.x){
-                    if(zombie.y > player.x){
+                    if(zombie.y > player.y){
                         let decide = generateRandomNr(0,1);
                         if(decide == 0){
                             zombie.y--;
@@ -555,9 +595,10 @@ function move(){
                         }else{
                             //nothing happens
                         }
-                    }
+                    }}
                     // If the collumn is either higher or lower
                 }else if(zombie.y == player.y){
+                    console.log('test 7');
                     if(zombie.x > player.x){
                         let decide = generateRandomNr(0,1);
                         if(decide == 0){
@@ -575,54 +616,63 @@ function move(){
                         //nothing happens
                     }
                 }
-            }
-            //if the zombie is on both a lower row and column
-        }if(zombie.x < player.x && zombie.y < player.y){
-            let decide = generateRandomNr(0,1);
-            if(decide == 0){
-                zombie.x++;
-            }
-            else{
-                zombie.y++;
-            }
+            
+
         }
          //if zombie is either on a  lower collumn or a lower row 
          else if((zombie.x < player.x && !(zombie.y < player.y))||(!(zombie.x > player.x) && zombie.y < player.y) ){
+            console.log('test 10');
              if(zombie.x < player.x){
                  zombie.x--;
                 }else if(zombie.y < player.y){
                     zombie.y--;
                 }
             }
+
+            //Map placement is mostly for testing purposes
             mapPlacement()
             console.table(gameMap);
         }else{
             //no movement this turn
+            //still print out map i console
+            mapPlacement();
+            console.table(gameMap);
+
         }
         });
-        
-        function mapPlacement(){
-        for(let y = 0; y < gameMap.length;y++){
-            //a inner for loop determening x corodinate together becoming (y,x) of the map array; for example map[y][x] = n.
-            for(let x = 0; x< gameMap[0].length;x++){
-                if(y == player.y && x == player.x){
-                    gameMap[y][x] = 'Player';
-                }
-                else{
+       
+function mapPlacement(){
+    for(let y = 0; y < gameMap.length;y++){
+        //a inner for loop determening x corodinate together becoming (y,x) of the map array; for example map[y][x] = n.
+        for(let x = 0; x< gameMap[0].length;x++){
+            if(y == player.y && x == player.x){
+                gameMap[y][x] = 'Player';
+            }
+            else{
 
-                    zombies.forEach(zombie =>{
+                zombies.forEach(zombie =>{
+                    // if(gameMap[y][x] == 'Zombie'){
+                        
+                    // }else{
+
                         if(y == zombie.y && x == zombie.x){
                             gameMap[y][x] = 'Zombie';
                         }else{
+
                             gameMap[y][x] = 'X';
                         }
-                    });
-                    
-                }
+                    // }
+                });
+                
             }
         }
     }
+}
+    //Checks firstly if you have reached the edge of the game map then checks for collisions
     checkCoords();
+    
+    setRadar(zombies,'Z');
+    setRadar(cats,'C')
 }
 
 function checkCoords(){
@@ -660,6 +710,8 @@ function checkCoords(){
                     alert('you did it');
                     cat.collected = true;
                     player.score++;
+                    document.querySelector('.score').innerHTML = 'Cats Saved: '+player.score;
+                    zombies.push(new createCAZ(generateRandomNr(0,6),generateRandomNr(0,6),false));
                     
                 }
             });
@@ -671,4 +723,90 @@ function checkCoords(){
     }
 }
 
+function setRadar(creatures,group){
+    var radarPos = new Array();
+    creatures.forEach(creature => {
+        var pX = player.x;
+        var pY = player.y;
+        let xCounter = 0;
+        let yCounter = 0;
+        for(let y = pY-2; y <= pY+2; y++){
+            xCounter = 0;
+            if(y< 0 || y > 6){
+                yCounter++;
+            }
+            else{
+
+                for(let x = pX-2; x <= pX+2; x++){
+                    //breaks for one iteration if loop is  going outside of the boundries of map
+                    if(x < 0 || x > 6){
+                        xCounter++;
+                    }else{
+                        if(x == creature.x && y== creature.y){
+                            if(!creature.collected){
+                                
+                                console.log('creature is at : '+x+' '+y)
+                                console.log('COUNTERS '+yCounter+' '+xCounter);
+                                var creaturePos = {
+                                    x: xCounter,
+                                    y: yCounter,
+                                };
+                                radarPos.push(creaturePos);
+                                console.table(radarPos);
+                            }
+                        }
+                        xCounter++;
+                    }
+                }
+                yCounter++;
+            }
+        }
+    });
+    if(radarPos.length > 0){
+
+        checkPositions(radarPos,group);
+        radarPos = new Array();
+    }else{
+        zDots.forEach(dot => dot.style.display= 'none');
+        cDots.forEach(dot => dot.style.display= 'none');
+    }
+}
+
+function checkPositions(radarPos,group){
+    var classNameY = '';
+    var classNameX = '';
+    if(group == 'Z'){
+        zDots.forEach(dot => dot.style.display= 'none');
+    }else if(group == 'C'){
+        cDots.forEach(dot => dot.style.display= 'none');
+    }
+    radarPos.forEach( pos => {
+        console.log('test');
+        switch(pos.y){
+            case 0: classNameY = 'zeroY'; break;
+            case 1: classNameY = 'oneY'; break;
+            case 2: classNameY = 'twoY'; break;
+            case 3: classNameY = 'threeY'; break;
+            case 4: classNameY = 'fourY'; break;
+        }
+
+        switch(pos.x){
+            case 0: classNameX = 'zeroX'; break;
+            case 1: classNameX = 'oneX'; break;
+            case 2: classNameX = 'twoX'; break;
+            case 3: classNameX = 'threeX'; break;
+            case 4: classNameX = 'fourX'; break;
+        }
+        if(group == 'Z'){
+            var fullClass = '.zDot.'+classNameY+'.'+ classNameX;
+        }else if(group == 'C'){
+            var fullClass = '.cDot.'+classNameY+'.'+ classNameX;
+        }
+        // console.log(document.querySelector(fullClass));
+        document.querySelector(fullClass).style.display = 'initial';
+    });
+
+}
+
 buttons.forEach(button => button.addEventListener('click',move));
+document.querySelector('.canvasArea').addEventListener('animationend',() => document.querySelector('.canvasArea').classList.remove('active'));

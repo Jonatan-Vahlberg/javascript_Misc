@@ -3,11 +3,36 @@ html{
     height: 100;
 }
 body{
-    margin: 0;
+    margin: 0 auto;
+    width: 425px;
+    height: 100%;
     background-color: #190f2b; 
 }
+.canvasArea.fadeOut{
+    animation: fade 2s ease-in-out 0.3s 1;   
+
+}
+
 #canvas{
-    border-bottom: 4px white solid; 
+    border-bottom: 4px white solid;
+}
+
+@keyframes fade{
+    0%{opacity: 1;}
+    50%{opacity: 0;};
+    100%{opacity: 1;}
+}
+
+.scoreDiv{
+    color: white;
+    grid-column: 3;
+    font-size: 15px
+}
+.scoreDiv >.fa-cat{
+    display: inline;
+}
+.scoreDiv p{
+    display: inline;
 }
 /* Controller Style Setup */
 .controllArea{
@@ -53,4 +78,67 @@ body{
     grid-row: 3;
     grid-column: 2;
     display: none;
+}
+.dataArea{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+#zombieRadar, #catRadar{
+    display: grid;
+    width: 80%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    height: 170px;    
+    background: url('./media/radar.png')no-repeat;
+    background-size: 100%;
+    margin: 0 auto;
+    
+}
+#catRadar{
+    background:  url('./media/catRadar.png')no-repeat;
+    background-size: 100%;
+}
+#zombieRadar .background{
+    width: 100%;
+    height: 100%;
+}
+#zombieRadar p{
+    grid-row: 1;
+}
+#zombieRadar .zDot, #catRadar .cDot{
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.zeroY{
+    grid-row: 3;
+}
+.oneY{
+    grid-row: 5;
+}
+.twoY{
+    grid-row: 6;
+}
+.threeY{
+    grid-row: 7;
+}
+.fourY{
+    grid-row: 9;
+}
+
+.zeroX{
+    grid-column: 3;
+}
+.oneX{
+    grid-column: 5;
+}
+.twoX{
+    grid-column: 6;
+}
+.threeX{
+    grid-column: 7;
+}
+.fourX{
+    grid-column: 9;
 }
