@@ -1,13 +1,21 @@
+//Constants: canvas and radar
+const canvasArea = document.querySelector('.canvasArea')
 const canvas = document.querySelector('#canvas');
 const buttons = document.querySelectorAll('.input');
 const zDots = document.querySelectorAll('.zDot');
 const cDots = document.querySelectorAll('.cDot');
 const ctx = canvas.getContext('2d');
+
+//Variables for animation and sound
+var buttonPressed;
+var walkAudio = new Audio('media/sound/gravel.mp3');
+walkAudio.load();
 canvas.width = 425;
 // var map = new Array(7).fill(new Array(7).fill());
 
 //This is the game map
 
+//Map for reading directions to generate the graphics can be messed around but escape should stay in place  that it is same with start
 var map = [
     [4,4,3,3,2,2,3], //0 = Start 1 = House 
     [1,1,3,5,5,3,2], //2 = Lake 3 = Forrest
@@ -30,7 +38,7 @@ var player = {
     score: 0,
     drunk: false,
 }
-//create cats and zombies
+//create cats and zombies  through basic object construction
 function createCAZ(x,y,collected){
     this.x  = x;
     this.y  = y;
@@ -40,6 +48,7 @@ function createCAZ(x,y,collected){
 var cats = new Array();
 
 var zombies = new Array();
+//Populates map with cats and zombies
 populateGameMap();
 function populateGameMap(){
     
@@ -52,6 +61,7 @@ function populateGameMap(){
          continue;  
         }else{
             if(i == 0){
+                //first Cat
                 var cat = new createCAZ(x,y,false);
                 cats.splice(0,1,cat);
                 i++;
@@ -61,20 +71,23 @@ function populateGameMap(){
                 //counter
                 let c = 0;
                 cats.forEach(cat => {
-                    
+                    // checks if cats are placed on same tile
                     if(x == cat.x && y == cat.y){
+                        //resets counter if so
                         c = 0;
                     }
                     else{
+                        //adds to counter if not on ocupied space
                         c++;
                     }
                 });
                 if(i == 1 && c == 1) {
-                    
+                    //second Cat
                     var cat = new createCAZ(x,y,false);
                     cats.push(cat);
                     i++;
                 }else if(i == 2 && c ==2){
+                    //Third Cat
                     var cat = new createCAZ(x,y,false);
                     cats.push(cat);
                     i++;
@@ -85,7 +98,7 @@ function populateGameMap(){
 
     }
     //Creating the first zombie
-        let z =   generateRandomNr(0,3); 
+        let z =   generateRandomNr(0,4); 
         let x = 0;
         let y = 0;
         if(z == 0){
@@ -106,7 +119,7 @@ function populateGameMap(){
         zombies.push(zombie);
     
 }
-
+//Map for storing the objects containing images and image specs
 var mapObject = new Array();
 var rows = 7;
 for(let i = 0; i < rows; i++){
@@ -425,32 +438,7 @@ function createCell(y,x,back,item1,item2,item3){
     mapObject[y].splice(x,1,mapBackground);
 }
 
-// var image = new Image();
-// var image2 = new Image();
-// var image3 = new Image();
-// var image4 = new Image();
-// image.src = "media/backgrounds/house.png";
-
-// image.onload = function(e){
-//     ctx.drawImage(image,0,0,canvas.width,canvas.height);
-//     image2.src = "media/sprites/lampost.png";
-    
-    
-// }
-// image2.onload = function(e){
-    
-//     ctx.drawImage(image2,0,55);
-//     image3.src = "media/sprites/cloud.png";
-//     }
-
-//     image3.onload = function(e){
-//         ctx.drawImage(image3,150,10);
-//         image4.src = 'media/sprites/house.png'
-//     }
-// image4.onload = function(e){
-//     ctx.drawImage(image4,0,0,100,128,generateRandomNr(0,300),78,100,128);
-// }
-
+//draws the graphics out to the canvas from mapObject array depending on player placement
 function drawAll(){
     
     ctx.drawImage(mapObject[player.y][player.x].background,0,0,canvas.width,canvas.height);
@@ -464,26 +452,27 @@ function drawAll(){
 
 }
 
-function move(){
+//Function detecting and calculating moves of player and all zombies currently in game 
+function move(buttonPressed){
     // document.querySelector('.canvasArea').classList.add('fadeOut');
 
     //checks wich button was pressed using each buttons unique IDs: UP DOWN LEFT RIGHT MISC
-    if(this.id == 'UP'){
+    if(buttonPressed.id == 'UP'){
         player.y--;
         drawAll();
         
-    }else if(this.id == 'LEFT'){
+    }else if(buttonPressed.id == 'LEFT'){
         player.x--;
         drawAll();
-    }else if(this.id == 'RIGHT'){
+    }else if(buttonPressed.id == 'RIGHT'){
         player.x++;
         drawAll();
-    }else if(this.id == 'DOWN'){
+    }else if(buttonPressed.id == 'DOWN'){
         player.y++;
         drawAll();
-    }else if(this.id == 'MISC'){ // ´Start of the game
+    }else if(buttonPressed.id == 'MISC'){ // ´Start of the game
         drawAll();
-        this.style.display = 'none';
+        buttonPressed.style.display = 'none';
         document.getElementById('LEFT').style.display = 'initial';
         document.getElementById('RIGHT').style.display = 'initial';
         document.getElementById('UP').style.display = 'initial';
@@ -491,7 +480,7 @@ function move(){
         return;
     }
 
-    //After player moves all zombies move and this forEach loops decides theyre pathfinding 
+    //After player moves all zombies move and this forEach loops decides they're pathfinding 
     zombies.forEach(zombie =>{
         let moveorNot = generateRandomNr(0,5); //moves if number is not greater than set number in if statement bellow
             if(moveorNot < 3){
@@ -669,29 +658,38 @@ function mapPlacement(){
     }
 }
     //Checks firstly if you have reached the edge of the game map then checks for collisions
+    //Secondly if a zombie has reached you Thirdly if you have collected a cat
     checkCoords();
     
+    //sets The radars checks the zombie radar extra due to bug not showing zombie position at certain times dont know how efective but here it is
     setRadar(zombies,'Z');
-    setRadar(cats,'C')
+    setRadar(cats,'C');
+    setRadar(zombies,'Z');
 }
 
 function checkCoords(){
+    //by checking each in a seperate if else statement it is easier to display correctily in corners
 
+    //Left Edge of playing field
     if(player.x == 0){
         document.getElementById('LEFT').style.display = 'none';
+        //sets left button to none
     }else{
         document.getElementById('LEFT').style.display = 'initial';
     }
+    //Right Edge of playing field
     if(player.x == 6){
         document.getElementById('RIGHT').style.display = 'none';
     }else{
         document.getElementById('RIGHT').style.display = 'initial';
     }
+    //Top Edge of playing field
     if(player.y == 0){
         document.getElementById('UP').style.display = 'none';
     }else{
         document.getElementById('UP').style.display = 'initial';
     }
+    //Bottom Edge of playing field
     if(player.y == 6){
         document.getElementById('DOWN').style.display = 'none';
     }else{
@@ -699,6 +697,7 @@ function checkCoords(){
     }
     //Checks for collision with zombie
     zombies.forEach(zombie => {
+        //if after player and zombie move both are ocupying same space player dies and game is over 
         if(player.x == zombie.x && player.y == zombie.y){
             alert('you are dead');
             location.reload();
@@ -706,11 +705,16 @@ function checkCoords(){
         }else {
             //if not zombie then cat 
             cats.forEach(cat => {
+                //if a player ocupies same space as cat the player score is increased
                 if(cat.x == player.x && cat.y == player.y && cat.collected == false){
                     alert('you did it');
+                    //this removes the cat from the radar and makes it inpossible to pickup again
                     cat.collected = true;
+
                     player.score++;
                     document.querySelector('.score').innerHTML = 'Cats Saved: '+player.score;
+
+                    //for each cat saved a zombie spawns on a random tile making the game that much harder
                     zombies.push(new createCAZ(generateRandomNr(0,6),generateRandomNr(0,6),false));
                     
                 }
@@ -718,30 +722,39 @@ function checkCoords(){
         }
 
     });
+    //this checks for if player has reached the escape tile with all three cats and only then can you escape
     if(player.x == 3 && player.y == 6 && player.score == 3){
         alert('You escaped');
     }
 }
 
+//radar function takes in a creatures array namely the: cats, zombies arrays and a group: string for determining wich group has ben sent
 function setRadar(creatures,group){
+    //array for storring creature radar positions in
     var radarPos = new Array();
+
+    //loop over the creatures: zombies/cats
     creatures.forEach(creature => {
         var pX = player.x;
         var pY = player.y;
         let xCounter = 0;
         let yCounter = 0;
+        //radar starts counting to spaces on top of player and heads two spaces bellow the player
         for(let y = pY-2; y <= pY+2; y++){
             xCounter = 0;
+
+            //if standing close to a wall it skips rows on top or bellow the game area
             if(y< 0 || y > 6){
                 yCounter++;
             }
             else{
-
+                //radar starts counting two spaces left of player and heads two spaces right of the player
                 for(let x = pX-2; x <= pX+2; x++){
-                    //breaks for one iteration if loop is  going outside of the boundries of map
+                    //breaks for one iteration if loop is  going outside of the boundries of map in x axle
                     if(x < 0 || x > 6){
                         xCounter++;
                     }else{
+                        //if the iterated x and y corresponds to a creature saves his position in counter variables 
                         if(x == creature.x && y== creature.y){
                             if(!creature.collected){
                                 
@@ -751,6 +764,8 @@ function setRadar(creatures,group){
                                     x: xCounter,
                                     y: yCounter,
                                 };
+
+                                //pushes the radar position to array
                                 radarPos.push(creaturePos);
                                 console.table(radarPos);
                             }
@@ -762,24 +777,35 @@ function setRadar(creatures,group){
             }
         }
     });
-    if(radarPos.length > 0){
 
+    //if radar has picked up any creature of a certain kind during this function call
+    if(radarPos.length > 0){
+        //checks position outputs a blip in the form of a previusly loaded img to the selected radar and still sends the group in order to determin group type
         checkPositions(radarPos,group);
+        //then for safty resets the array
         radarPos = new Array();
     }else{
-        zDots.forEach(dot => dot.style.display= 'none');
-        cDots.forEach(dot => dot.style.display= 'none');
+        //if radar is empty set all blips to none
+        if(group == 'Z'){
+            zDots.forEach(dot => dot.style.display= 'none');
+
+        }else if(group == 'C'){
+            cDots.forEach(dot => dot.style.display= 'none');
+        }
     }
 }
-
+//the sole function for outputing the radar blips on the radar itself 
 function checkPositions(radarPos,group){
+    //part of a string for locating the correct blip 
     var classNameY = '';
     var classNameX = '';
     if(group == 'Z'){
+        //this first makes all blips in group none in order to not leave trailing blips
         zDots.forEach(dot => dot.style.display= 'none');
     }else if(group == 'C'){
         cDots.forEach(dot => dot.style.display= 'none');
     }
+    //for each position in radarPos array check the y and x counter in order to determin position i grid layout of blip
     radarPos.forEach( pos => {
         console.log('test');
         switch(pos.y){
@@ -797,16 +823,51 @@ function checkPositions(radarPos,group){
             case 3: classNameX = 'threeX'; break;
             case 4: classNameX = 'fourX'; break;
         }
+
+        //puts together the search string for the queryselector in bottom of function
         if(group == 'Z'){
             var fullClass = '.zDot.'+classNameY+'.'+ classNameX;
         }else if(group == 'C'){
             var fullClass = '.cDot.'+classNameY+'.'+ classNameX;
         }
         // console.log(document.querySelector(fullClass));
+        //this finds the selected blip and makes it visible
         document.querySelector(fullClass).style.display = 'initial';
     });
 
 }
 
-buttons.forEach(button => button.addEventListener('click',move));
-document.querySelector('.canvasArea').addEventListener('animationend',() => document.querySelector('.canvasArea').classList.remove('active'));
+function endAnimate(){
+
+    if(this.classList.contains('fadeOut')){
+        this.classList.remove('fadeOut');
+        this.classList.add('fadeIn');
+        move(buttonPressed);
+
+    }else if(this.classList.contains('fadeIn')){
+        this.classList.remove('fadeIn');
+        buttons.forEach(button => {
+            if(!(button.id == 'MISC')){
+                button.style.opacity = 1;
+            }
+        });
+        walkAudio.pause();
+
+
+    }
+}
+
+function startAnimate(){
+    canvasArea.classList.add('fadeOut')
+    buttonPressed = this;
+    buttons.forEach(button => {
+        if(!(button.id == 'MISC')){
+            button.style.opacity = 0;
+        }
+    });
+    walkAudio.play();
+
+}
+//adding eventlisteners onclick to all buttons and starting the move function if it is a arrow button
+buttons.forEach(button => button.addEventListener('click',startAnimate));
+canvasArea.addEventListener('animationend',endAnimate);
