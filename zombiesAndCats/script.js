@@ -1,16 +1,27 @@
 //Constants: canvas and radar
 const canvasArea = document.querySelector('.canvasArea')
 const canvas = document.querySelector('#canvas');
+canvas.width = 425;
+var images = [new Image(),new Image()];
+images[0].src = 'media/backgrounds/over.png';
+images[1].src = 'media/backgrounds/win.gif';
 const buttons = document.querySelectorAll('.input');
 const zDots = document.querySelectorAll('.zDot');
 const cDots = document.querySelectorAll('.cDot');
 const ctx = canvas.getContext('2d');
 
+const outputText = document.querySelector('#outputText');
+
 //Variables for animation and sound
 var buttonPressed;
 var walkAudio = new Audio('media/sound/gravel.mp3');
 walkAudio.load();
-canvas.width = 425;
+
+var catSound = new Audio('media/sound/meow.mp3');
+catSound.load();
+
+var zombieSound = new Audio('media/sound/zombie.mp3');
+zombieSound.load();
 // var map = new Array(7).fill(new Array(7).fill());
 
 //This is the game map
@@ -25,6 +36,25 @@ var map = [
     [8,6,5,6,10,10,9], // 10 = Cemetary
     [11,6,6,7,6,6,9] // 11 = Tavern inner
 ];
+
+//text telling you info about current area and if you have found a cat
+var flavorText = [
+    ['As you Stand in your house you feel determind to keep moving.'],//0
+    ['Standing outside of this house completly abandond makes you feel small.',' As you are about to leave you notice one of your small kittens hiding in the bushes of the house'],//1
+    ['The lake apears as a tinted galss mirror.',' Taking a look around you notice that close to the beach sits one of the kittens gigerly trying to clen sand out of its fur.'],//2
+    ['The path keeps twisting as you are being led further and further into the verdant forrest.',' While walking past some colorful mushrooms you hear a meek sound coming from above and high up i one of the trees sits one of your kitttens'],//3
+    ['Seeing the peoples backyards completly abandond with no activity makes you a little sad.',' in the left far edge of the backyard, in the shade of the fence sits one of your kittens avoiding the sun'],//4
+    ['walking next to a tree you gaze upon the mighty hills hoping that your cats havent moved further in.',' As a stroke of luck lying next to the tree is one of your kittens exsausted from the long trip'],//5
+    ['You were always warned to stay away from the roads as fast moving cars always ran trough here...seems there is no need to still be careful.',' It seems one of your kitttens shared the same thought proudly walking in the middle of the  road not a care in the world'],//6
+    ['The fenceed of area lies in stark contrast to your otherwise lonesome town...it feels cold distant you should return once you find the rest of your kittens.',' After watching from a nerby bush ready to head out once more you feel something brush up on your leg its one of the kittens.'],//7
+    ['Normally you woundn\'t be allowed to enter the tavern but desperate times call for desperate measures.',' As you take in the empty tavern a smell of ingrained cigaretts fill the area when turing around to leave your eye catches a ball of fur snacing down on a rat in the corner its one of your kittens.'],//8
+    ['Taking one step into the deepest part of the forrest your nose i assulted with a stench emenating from some of the bushes, and you have the destinct feeling something or somebody is watching you.',' Sitting untop of a large stone with its back raised is one of your kittens trying to fend of a nearby snake.'],//9
+    ['The cemetary really feels devoid of any life as you meander trough the tombstones you feel a strong chill.',' Sitting nearby a still lit gravelight is one of your kittens searching for a bit of warmth.'],//10
+    ['The taverns backroom seems to be mostly empty save for a few kegs and a grate in the middle of the room.','You find one of your kittens calling out desperatly as they have gotten their paw stuck in  the grate.'],//11
+
+
+
+]
 
 // this map exsist to host the cats zombies and player positions att all times
 var gameMap = new Array();
@@ -402,6 +432,12 @@ function  populateMap(){
     }
 }
 
+// function generateCat(xMin, xMax, yMin, yMax, width, height){
+//     let xP = generateRandomNr(xMin,xMax);
+//     let yP = generateRandomNr(yMin,yMax);
+//     return new itemObj('media/sprites/cat.png',0,0,330,340,xP,yP,width,height);
+// }
+
 //a function for returning a random number between min and max.
 function generateRandomNr(min, max){
     var n = Math.floor(Math.random()*(max - min)+ min);
@@ -449,7 +485,7 @@ function drawAll(){
     ctx.drawImage(mapObject[player.y][player.x].image2,temp2.sX,temp2.sY,temp2.sWidth,temp2.sHeight,temp2.x,temp2.y,temp2.width,temp2.height);
     let temp3 = mapObject[player.y][player.x].image3Specs; 
     ctx.drawImage(mapObject[player.y][player.x].image3,temp3.sX,temp3.sY,temp3.sWidth,temp3.sHeight,temp3.x,temp3.y,temp3.width,temp3.height);
-
+    outputText.innerHTML = flavorText[map[player.y][player.x]][0];
 }
 
 //Function detecting and calculating moves of player and all zombies currently in game 
@@ -471,6 +507,10 @@ function move(buttonPressed){
         player.y++;
         drawAll();
     }else if(buttonPressed.id == 'MISC'){ // ´Start of the game
+        if(buttonPressed.value == 'Again?'){
+            location.reload();
+        } 
+            
         drawAll();
         buttonPressed.style.display = 'none';
         document.getElementById('LEFT').style.display = 'initial';
@@ -479,6 +519,8 @@ function move(buttonPressed){
         document.getElementById('DOWN').style.display = 'initial';
         return;
     }
+
+
 
     //After player moves all zombies move and this forEach loops decides they're pathfinding 
     zombies.forEach(zombie =>{
@@ -699,18 +741,28 @@ function checkCoords(){
     zombies.forEach(zombie => {
         //if after player and zombie move both are ocupying same space player dies and game is over 
         if(player.x == zombie.x && player.y == zombie.y){
-            alert('you are dead');
-            location.reload();
+            // location.reload();
+            ctx.drawImage(images[0],0,0);
+            zombieSound.play();
+            buttons.forEach(button => {
+                if(!(button.id == 'MISC')){
+                    button.style.display = 'none';
+                }else{
+                    button.style.display = 'initial';
+                    button.value = 'Again?';
+                }
+
+            });
             return;
         }else {
             //if not zombie then cat 
             cats.forEach(cat => {
                 //if a player ocupies same space as cat the player score is increased
                 if(cat.x == player.x && cat.y == player.y && cat.collected == false){
-                    alert('you did it');
                     //this removes the cat from the radar and makes it inpossible to pickup again
+                    outputText.innerHTML += flavorText[map[player.y][player.x]][1];
                     cat.collected = true;
-
+                    catSound.play();
                     player.score++;
                     document.querySelector('.score').innerHTML = 'Cats Saved: '+player.score;
 
@@ -724,7 +776,16 @@ function checkCoords(){
     });
     //this checks for if player has reached the escape tile with all three cats and only then can you escape
     if(player.x == 3 && player.y == 6 && player.score == 3){
-        alert('You escaped');
+        ctx.drawImage(images[1],0,0);
+            buttons.forEach(button => {
+                if(!(button.id == 'MISC')){
+                    button.style.display = 'none';
+                }else{
+                    button.style.display = 'initial';
+                    button.value = 'Again?';
+                }
+
+            });
     }
 }
 
@@ -852,6 +913,7 @@ function endAnimate(){
             }
         });
         walkAudio.pause();
+        walkAudio.currentTime = 1;
 
 
     }
