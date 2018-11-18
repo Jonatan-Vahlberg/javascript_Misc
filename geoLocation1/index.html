@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+</head>
+<body>
+    <button id="geo">Get location</button>
+    <p id="test"></p>
+    <script>
+        var geo = document.getElementById('geo');
+        var test = document.getElementById('test');
+        function getGeolocation(){
+            if(navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(showPosition)
+            }else{
+                test.innerHTML = 'NO SUPORT FOR GEOLOCATION';
+            }
+        }
+        function showPosition(position){
+            test.innerHTML = 'LATITUDE: '+ position.coords.latitude+'<br>LONGITUDE: ' + position.coords.longitude;
+        }
+        function areYouHome(){
+            if(
+                lat < 59.298179 && lat > 59.298076 &&
+                long < 17.946816 && long > 17.946596){
+                    alert('YOU ARE HOME');
+                }
+        }
+        geo.addEventListener('click', getGeolocation);
+        </script>
+</body>
+</html>
