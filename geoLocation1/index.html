@@ -11,11 +11,11 @@
     <script>
         var geo = document.getElementById('geo');
         var test = document.getElementById('test');
-        setInterval(navigator.geolocation.getCurrentPosition(areYouHome),1000);
+        navigator.geolocation.getCurrentPosition(areYouHome)
         function getGeolocation(){  
             if(navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(showPosition)
-        setInterval(navigator.geolocation.getCurrentPosition(areYouHome),1000);
+                navigator.geolocation.getCurrentPosition(areYouHome)
 
             }else{
                 test.innerHTML = 'NO SUPORT FOR GEOLOCATION';
