@@ -524,8 +524,8 @@ function move(buttonPressed){
 
     //After player moves all zombies move and this forEach loops decides they're pathfinding 
     zombies.forEach(zombie =>{
-        let moveorNot = generateRandomNr(0,5); //moves if number is not greater than set number in if statement bellow
-            if(moveorNot < 3){
+        let moveorNot = generateRandomNr(0,9); //moves if number is not greater than set number in if statement bellow
+            if(moveorNot <= 5){
             
             //if zombie is both on a higher column and a higher row
             if(zombie.x > player.x && zombie.y > player.y){

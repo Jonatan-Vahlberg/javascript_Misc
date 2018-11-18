@@ -167,7 +167,7 @@ body{
 
 .output{
     border: 2px white solid;
-    height: 100px;
+    min-height: 100px;
     color: white;
     font-size: 18px;
     font-weight: bold;
