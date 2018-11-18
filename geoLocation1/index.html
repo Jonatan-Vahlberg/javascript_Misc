@@ -11,6 +11,7 @@
     <script>
         var geo = document.getElementById('geo');
         var test = document.getElementById('test');
+        setInterval(navigator.geolocation.getCurrentPosition(areYouHome),1000);
         function getGeolocation(){
             if(navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(showPosition)
@@ -21,11 +22,17 @@
         function showPosition(position){
             test.innerHTML = 'LATITUDE: '+ position.coords.latitude+'<br>LONGITUDE: ' + position.coords.longitude;
         }
-        function areYouHome(){
+        function areYouHome(position){
+              let lat =  position.coords.latitude
+               let long = position.coords.longitude
+            
             if(
                 lat < 59.298179 && lat > 59.298076 &&
                 long < 17.946816 && long > 17.946596){
                     alert('YOU ARE HOME');
+                }
+                else{
+                    console.log('you are not home');
                 }
         }
         geo.addEventListener('click', getGeolocation);
